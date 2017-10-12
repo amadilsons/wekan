@@ -15,7 +15,12 @@ template(name="userFormsLayout")
     h1.at-form-landing-logo
       img(src="{{pathFor '/wekan-logo.png'}}" alt="Wekan")
     section.auth-dialog
-      +Template.dynamic(template=content)
+      if $not ldap.get
+        +Template.dynamic(template=content)
+        p
+          a.ldap LDAP Auth
+      else
+        +test1
       div.at-form-lang
         select.select-lang.js-userform-set-language
           each languages
@@ -46,3 +51,7 @@ template(name="message")
     unless currentUser
       with(pathFor route='atSignIn')
         p {{{_ 'page-maybe-private' this}}}
+        
+template(name="test1")
+  .at-form
+    button Authenticate

@@ -2,19 +2,20 @@ const passwordField = AccountsTemplates.removeField('password');
 const emailField = AccountsTemplates.removeField('email');
 
 AccountsTemplates.addFields([{
-  _id: 'username',
-  type: 'text',
-  displayName: 'username',
-  required: true,
-  minLength: 2,
-}, emailField, passwordField, {
-  _id: 'invitationcode',
-  type: 'text',
-  displayName: 'Invitation Code',
-  required: false,
-  minLength: 6,
-  template: 'invitationCode',
-}]);
+    _id: 'username',
+    type: 'text',
+    displayName: 'username',
+    required: true,
+    minLength: 2,
+  }, emailField, passwordField, {
+    _id: 'invitationcode',
+    type: 'text',
+    displayName: 'Invitation Code',
+    required: false,
+    minLength: 6,
+    template: 'invitationCode',
+  },
+]);
 
 AccountsTemplates.configure({
   defaultLayout: 'userFormsLayout',

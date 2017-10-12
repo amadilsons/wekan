@@ -10,12 +10,19 @@ const i18nTagToT9n = (i18nTag) => {
   return i18nTag;
 };
 
+Template.userFormsLayout.onCreated(() => {
+  this.ldap = new ReactiveVar(true);
+  console.log(this.ldap.get())
+});
+
 Template.userFormsLayout.onRendered(() => {
   const i18nTag = navigator.language;
   if (i18nTag) {
     T9n.setLanguage(i18nTagToT9n(i18nTag));
   }
   EscapeActions.executeAll();
+  console.log(this.ldap.get())
+  console.log(this)
 });
 
 Template.userFormsLayout.helpers({
@@ -47,6 +54,12 @@ Template.userFormsLayout.events({
     T9n.setLanguage(i18nTagToT9n(i18nTag));
     evt.preventDefault();
   },
+
+  'click .ldap'() {
+    console.log(this.ldap.get())
+    console.log(Template.instance());
+    this.ldap.set(!this.ldap.get());
+  }
 });
 
 Template.defaultLayout.events({

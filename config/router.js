@@ -3,6 +3,13 @@ FlowRouter.triggers.exit([({path}) => {
   previousPath = path;
 }]);
 
+FlowRouter.route('/ldap', {
+  name: 'ldap',
+  action() {
+    BlazeLayout.render('test1');
+  },
+});
+
 FlowRouter.route('/', {
   name: 'home',
   triggersEnter: [AccountsTemplates.ensureSignedIn],
