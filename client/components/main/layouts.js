@@ -10,22 +10,20 @@ const i18nTagToT9n = (i18nTag) => {
   return i18nTag;
 };
 
-Template.userFormsLayout.onCreated(() => {
-  this.ldap = new ReactiveVar(true);
-  console.log(this.ldap.get())
-});
+BlazeComponent.extendComponent({
+  onCreated() {
+    this.ldap = new ReactiveVar(false);
+  },
 
-Template.userFormsLayout.onRendered(() => {
-  const i18nTag = navigator.language;
-  if (i18nTag) {
-    T9n.setLanguage(i18nTagToT9n(i18nTag));
-  }
-  EscapeActions.executeAll();
-  console.log(this.ldap.get())
-  console.log(this)
-});
+  onRendered() {
+    const i18nTag = navigator.language;
+    if (i18nTag) {
+      T9n.setLanguage(i18nTagToT9n(i18nTag));
+    }
+    EscapeActions.executeAll();
+    console.log('rendered');
+  },
 
-Template.userFormsLayout.helpers({
   languages() {
     return _.map(TAPi18n.getLanguages(), (lang, code) => {
       return {
@@ -42,25 +40,25 @@ Template.userFormsLayout.helpers({
   },
 
   isCurrentLanguage() {
-    const t9nTag = i18nTagToT9n(this.tag);
+    const t9nTag = i18nTagToT9n(this.currentData().tag);
     const curLang = T9n.getLanguage() || 'en';
     return t9nTag === curLang;
   },
-});
 
-Template.userFormsLayout.events({
-  'change .js-userform-set-language'(evt) {
-    const i18nTag = $(evt.currentTarget).val();
-    T9n.setLanguage(i18nTagToT9n(i18nTag));
-    evt.preventDefault();
+  events() {
+    return [{
+      'change .js-userform-set-language'(evt) {
+        const i18nTag = $(evt.currentTarget).val();
+        T9n.setLanguage(i18nTagToT9n(i18nTag));
+        evt.preventDefault();
+      },
+      'click .ldap'(evt) {
+        this.ldap.set(!this.ldap.get());
+      },
+    }];
   },
+}).register('userFormsLayout');
 
-  'click .ldap'() {
-    console.log(this.ldap.get())
-    console.log(Template.instance());
-    this.ldap.set(!this.ldap.get());
-  }
-});
 
 Template.defaultLayout.events({
   'click .js-close-modal': () => {

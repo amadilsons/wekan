@@ -17,10 +17,20 @@ template(name="userFormsLayout")
     section.auth-dialog
       if $not ldap.get
         +Template.dynamic(template=content)
-        p
-          a.ldap LDAP Auth
       else
-        +test1
+        .at-form
+          .at-title
+            h3 LDAP Login
+          .at-input
+            label ID
+            input(type="text" placeholder="Login ID")
+          .at-input
+            label {{_ 'password' }}
+            input(type="text" placeholder="{{_ 'password' }}")
+          button Authenticate
+        br
+      p
+        a.ldap LDAP Auth
       div.at-form-lang
         select.select-lang.js-userform-set-language
           each languages
@@ -51,7 +61,6 @@ template(name="message")
     unless currentUser
       with(pathFor route='atSignIn')
         p {{{_ 'page-maybe-private' this}}}
-        
+
 template(name="test1")
-  .at-form
-    button Authenticate
+  
