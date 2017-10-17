@@ -21,7 +21,6 @@ BlazeComponent.extendComponent({
       T9n.setLanguage(i18nTagToT9n(i18nTag));
     }
     EscapeActions.executeAll();
-    console.log('rendered');
   },
 
   languages() {
@@ -55,10 +54,19 @@ BlazeComponent.extendComponent({
       'click .ldap'(evt) {
         this.ldap.set(!this.ldap.get());
       },
+
     }];
   },
 }).register('userFormsLayout');
 
+Template.ldapLogin.events({
+  'keydown form'(evt) {
+    evt.preventDefault();
+    if (evt.keyCode === 13) {
+      Template.instance().find('button[type=submit]').click();
+    }
+  },
+});
 
 Template.defaultLayout.events({
   'click .js-close-modal': () => {

@@ -18,17 +18,7 @@ template(name="userFormsLayout")
       if $not ldap.get
         +Template.dynamic(template=content)
       else
-        .at-form
-          .at-title
-            h3 LDAP Login
-          .at-input
-            label ID
-            input(type="text" placeholder="Login ID")
-          .at-input
-            label {{_ 'password' }}
-            input(type="text" placeholder="{{_ 'password' }}")
-          button Authenticate
-        br
+        +ldapLogin
       p
         a.ldap LDAP Auth
       div.at-form-lang
@@ -39,6 +29,19 @@ template(name="userFormsLayout")
             else
               option(value="{{tag}}") {{name}}
 
+template(name="ldapLogin")
+  form.at-form
+    .at-title
+      h3 LDAP Login
+    .at-input.ldap-login-id
+      label ID
+      input(type="text" placeholder="Login ID" autofocus="autofocus")
+    .at-input
+      label {{_ 'password' }}
+      input(type="password" placeholder="{{_ 'password' }}")
+    button(type="submit") Authenticate
+  br
+  
 template(name="defaultLayout")
   +header
   #content
