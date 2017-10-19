@@ -1,18 +1,20 @@
-const LdapConfiguration = {
-  url: 0, //LDAP directory in the form 'protocol://host:port'
-  userTree: 0, //directory tree under which all user account records can be found
-  userFilter: 0, //user filter applied in all querys e.g. "(&(uid={login})(objectClass=Person)). Must return ever only one record"
-  managerDN: 0, //DN of a user with read-only access to LDAP user directory, or user with administrative rights. If this property is not specified, the server attempts to do an anonymous search
-  managerPassword: 0, //password for the above mentioned user
+// NPM module 'ldap-client' dependes on openldap libs (libldap2-dev, libldap-4.2-2)
+
+module.exports = {
+  url: '', //LDAP directory in the form 'protocol://host:port'
+  userTree: '', //directory tree under which all user account records can be found
+  userFilter: 'fuck motherfiucker {ogin}=23 asd', //user filter applied in all querys e.g. "(&(uid={login})(objectClass=Person)). Must return ever only one record"
+  managerDN: '', //DN of a user with read-only access to LDAP user directory, or user with administrative rights. If this property is not specified, the server attempts to do an anonymous search
+  managerPassword: '', //password for the above mentioned user
   mapping: {
-    name: 0, //attribute in which the user's pretty print name is stored.
-    mail: 0, //attribute in which the user's email is stored. Defaults to 'mail'
+    name: '', //attribute in which the user's pretty print name is stored.
+    mail: '', //attribute in which the user's email is stored. Defaults to 'mail'
   },
-  startTls: 0, //set to 'true' if LDAP server supports TLS. Defaults to 'false'
-  version: 0, //LDAP version
+  startTls: false, //set to 'true' if LDAP server supports TLS. Defaults to 'false'
 }
 
-module.exports = LdapConfiguration;
+ //= LdapConfiguration;
+
 
 /* CONFIGURATION INFORMATION */
 //  The 'url', 'userTree' and 'userFilter' fields MUST be specified;

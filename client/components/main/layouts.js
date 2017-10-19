@@ -59,11 +59,23 @@ BlazeComponent.extendComponent({
   },
 }).register('userFormsLayout');
 
+Template.ldapLogin.onRendered(() => {
+  var LdapAuthenticator = new require('../../lib/ldap.js');
+  try {
+    var ldapClient = new LdapAuthenticator();
+  } catch(err) {
+    console.log(err.message);
+    alert('LDAP authentication is not possible due to invalid configuration file!');
+    console.log(this.parent());
+  }
+
+});
+
 Template.ldapLogin.events({
   'keydown form'(evt) {
-    evt.preventDefault();
     if (evt.keyCode === 13) {
       Template.instance().find('button[type=submit]').click();
+      evt.preventDefault();
     }
   },
 });
