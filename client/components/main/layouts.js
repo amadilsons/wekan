@@ -59,26 +59,39 @@ BlazeComponent.extendComponent({
   },
 }).register('userFormsLayout');
 
-Template.ldapLogin.onRendered(() => {
-  var LdapAuthenticator = new require('../../lib/ldap.js');
-  try {
-    var ldapClient = new LdapAuthenticator();
-  } catch(err) {
-    console.log(err.message);
-    alert('LDAP authentication is not possible due to invalid configuration file!');
-    console.log(this.parent());
-  }
+BlazeComponent.extendComponent({
+  onCreated() {
+    this.error = new ReactiveVar('');
+    var LdapAuthenticator = require('../../lib/ldap.js');
 
-});
-
-Template.ldapLogin.events({
-  'keydown form'(evt) {
-    if (evt.keyCode === 13) {
-      Template.instance().find('button[type=submit]').click();
-      evt.preventDefault();
+    try {
+      this.ldapAuth = new LdapAuthenticator();
+    } catch(err) {
+      this.error.set('Invalid LDAP configuration');
+      console.log('ERROR: ' + err.message); //Let the user learn more about the caught error
     }
   },
-});
+
+  onRendered() {
+    if(this.error.get() !== '') {
+      this.$('fieldset').prop('disabled', true);
+    } else {
+      this.ldapAuth.initLdapClient();
+    }
+  },
+
+  events() {
+    return [{
+      'keydown form'(evt) {
+        if (evt.keyCode === 13) {
+          Template.instance().find('button[type=submit]').click();
+          evt.preventDefault();
+        }
+      },
+    }];
+  },
+}).register('ldapLogin');
+
 
 Template.defaultLayout.events({
   'click .js-close-modal': () => {

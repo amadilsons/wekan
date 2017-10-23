@@ -1,9 +1,9 @@
 // NPM module 'ldap-client' dependes on openldap libs (libldap2-dev, libldap-4.2-2)
 
 module.exports = {
-  url: '', //LDAP directory in the form 'protocol://host:port'
+  url: 'ldap.server.com', //LDAP directory in the form 'protocol://host:port'
   userTree: '', //directory tree under which all user account records can be found
-  userFilter: 'fuck motherfiucker {ogin}=23 asd', //user filter applied in all querys e.g. "(&(uid={login})(objectClass=Person)). Must return ever only one record"
+  userFilter: '{login}', //user filter applied in all querys e.g. "(&(uid={login})(objectClass=Person)). Must return ever only one record"
   managerDN: '', //DN of a user with read-only access to LDAP user directory, or user with administrative rights. If this property is not specified, the server attempts to do an anonymous search
   managerPassword: '', //password for the above mentioned user
   mapping: {
@@ -11,7 +11,7 @@ module.exports = {
     mail: '', //attribute in which the user's email is stored. Defaults to 'mail'
   },
   startTls: false, //set to 'true' if LDAP server supports TLS. Defaults to 'false'
-}
+};
 
  //= LdapConfiguration;
 
